@@ -55,18 +55,19 @@ const writePackage = (root, appName) => {
 
 const copyFile = (root, template) => {
     if(!fs.existsSync(root)) {
+        console.log('root.....', root);
         fs.mkdirSync(root);
     }
 
     // 读取文件夹
-    fs.readdir(template, (error, pathRoutes) => {
+    fs.readdirSync(template, (error, pathRoutes) => {
         console.log(template, pathRoutes, 'pathRoutes....pathRoutes..');
         pathRoutes.forEach(pathRoute => {
             // 排除隐藏文件
             if (!/^\./.test(pathRoute)) {
                 // 判断一下文件是否存在
                 const filePath = path.join(template, pathRoute);
-                fs.stat(filePath, function(err, data){ 
+                fs.statSync(filePath, function(err, data){ 
                     if(data) {
                         const copyPath = path.resolve(root, pathRoute === 'gitignore.txt' ? '.gitignore' : pathRoute);
                         if(data.isFile()) {
