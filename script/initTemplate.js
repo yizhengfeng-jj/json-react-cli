@@ -10,7 +10,7 @@ module.exports.initTemplate = function(projectName) {
     // 2：projectName是不是已经存在
     // console.log(process.cwd(), 'process.cwd()...process.cwd()..');
     const template = path.resolve(__dirname, '..', './template');
-    const root = path.resolve(__dirname, '..', projectName);
+    const root = path.resolve(projectName);
     console.log(path.resolve(), 'path.resolve....path.resolve...');
     const appName = path.basename(root);
     // 判断名称是否合法
@@ -56,24 +56,22 @@ const writePackage = (root, appName) => {
 
 const copyFile = (root, template) => {
     if(!fs.existsSync(root)) {
-        console.log('root.....', root);
         fs.mkdirSync(root);
     }
 
     // 读取文件夹
-    fs.readdirSync(template, (error, pathRoutes) => {
-        console.log(template, pathRoutes, 'pathRoutes....pathRoutes..');
+    fs.readdir(template, (error, pathRoutes) => {
+        console.log(root, template, 'aa');
         pathRoutes.forEach(pathRoute => {
             // 排除隐藏文件
             if (!/^\./.test(pathRoute)) {
                 // 判断一下文件是否存在
                 const filePath = path.join(template, pathRoute);
-                fs.statSync(filePath, function(err, data){ 
+                fs.stat(filePath, function(err, data){ 
                     if(data) {
                         const copyPath = path.resolve(root, pathRoute === 'gitignore.txt' ? '.gitignore' : pathRoute);
                         if(data.isFile()) {
                             // 读取文件
-                            console.log('not in');
                             fs.createReadStream(filePath).pipe(fs.createWriteStream(copyPath));
                         }else {
                             copyFile(copyPath, filePath);
