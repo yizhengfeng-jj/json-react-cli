@@ -11,7 +11,7 @@ module.exports.initTemplate = function(projectName) {
     // console.log(process.cwd(), 'process.cwd()...process.cwd()..');
     const template = path.resolve(__dirname, '..', './template');
     const root = path.resolve(__dirname, '..', projectName);
-    console.log(path.resolve, 'path.resolve....path.resolve...');
+    console.log(path.resolve(), 'path.resolve....path.resolve...');
     const appName = path.basename(root);
     // 判断名称是否合法
     checkAppName(appName);
