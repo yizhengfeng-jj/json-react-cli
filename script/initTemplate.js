@@ -60,6 +60,7 @@ const copyFile = (root, template) => {
 
     // 读取文件夹
     fs.readdir(template, (error, pathRoutes) => {
+        console.log(template, pathRoutes, 'pathRoutes....pathRoutes..')
         pathRoutes.forEach(pathRoute => {
             // 排除隐藏文件
             if (!/^\./.test(pathRoute)) {
