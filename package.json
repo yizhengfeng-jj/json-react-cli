@@ -9,9 +9,6 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "files": [
-    "lib"
-  ],
   "author": "yizhenfeng",
   "license": "ISC",
   "dependencies": {
