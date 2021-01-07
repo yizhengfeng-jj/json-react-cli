@@ -8,10 +8,8 @@ module.exports.initTemplate = function(projectName) {
     // 在copy template之前，需要检测projectName的几个合法问题
     // 1: projectName文件名是不是合法
     // 2：projectName是不是已经存在
-    // console.log(process.cwd(), 'process.cwd()...process.cwd()..');
     const template = path.resolve(__dirname, '..', './template');
     const root = path.resolve(projectName);
-    console.log(path.resolve(), 'path.resolve....path.resolve...');
     const appName = path.basename(root);
     // 判断名称是否合法
     checkAppName(appName);
@@ -50,7 +48,7 @@ const writePackage = (root, appName) => {
         eject: 'json-react-cli eject-cli',
     });
 
-    const fileName = path.join(root, 'package.cli.json');
+    const fileName = path.join(root, 'package.json');
     fs.writeFileSync(fileName, JSON.stringify(packageJson, null, 2) + os.EOL);
 }
 
@@ -61,7 +59,6 @@ const copyFile = (root, template) => {
 
     // 读取文件夹
     fs.readdir(template, (error, pathRoutes) => {
-        console.log(root, template, 'aa');
         pathRoutes.forEach(pathRoute => {
             // 排除隐藏文件
             if (!/^\./.test(pathRoute)) {
