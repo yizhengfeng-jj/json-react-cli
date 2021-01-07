@@ -71,6 +71,7 @@ const copyFile = (root, template) => {
                         const copyPath = path.resolve(root, pathRoute === 'gitignore.txt' ? '.gitignore' : pathRoute);
                         if(data.isFile()) {
                             // 读取文件
+                            console.log('not in');
                             fs.createReadStream(filePath).pipe(fs.createWriteStream(copyPath));
                         }else {
                             copyFile(copyPath, filePath);
