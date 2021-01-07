@@ -8,21 +8,21 @@ module.exports.initTemplate = function(projectName) {
     // 在copy template之前，需要检测projectName的几个合法问题
     // 1: projectName文件名是不是合法
     // 2：projectName是不是已经存在
-    const template = path.resolve('./template');
-    const root = path.resolve(projectName);
+    // console.log(process.cwd(), 'process.cwd()...process.cwd()..');
+    const template = path.resolve(__dirname, '..', './template');
+    const root = path.resolve(__dirname, '..', projectName);
     const appName = path.basename(root);
-
     // 判断名称是否合法
     checkAppName(appName);
 
     // 判断有没有这个文件夹
-    fs.ensureDirSync(appName);
+    // fs.ensureDirSync(appName);
+
+    // copy template的内容给到指定文件夹
+    copyFile(root, template);
 
     // 写入package.json
     writePackage(root, appName);
-
-    // copy template的内容给到指定文件夹
-    copyFile(root, template)
 }; 
 
 const checkAppName = appName => {
@@ -60,7 +60,7 @@ const copyFile = (root, template) => {
 
     // 读取文件夹
     fs.readdir(template, (error, pathRoutes) => {
-        console.log(template, pathRoutes, 'pathRoutes....pathRoutes..')
+        console.log(template, pathRoutes, 'pathRoutes....pathRoutes..');
         pathRoutes.forEach(pathRoute => {
             // 排除隐藏文件
             if (!/^\./.test(pathRoute)) {
