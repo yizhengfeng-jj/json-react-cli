@@ -1,6 +1,6 @@
 {
   "name": "json-react-cli",
-  "version": "1.4.2",
+  "version": "1.4.3",
   "description": "json的脚手架",
   "main": "index.js",
   "bin": {
