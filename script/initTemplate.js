@@ -86,6 +86,7 @@ const copyFile = (root, template) => {
 }
 
 const install = (root) => {
+    cconsole.log(root, 'root....root...');
     process.chdir(root);
 
     const command = 'npm';
