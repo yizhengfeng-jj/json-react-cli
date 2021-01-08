@@ -4,26 +4,11 @@ const commander = require('commander');
 const chalk = require('chalk');
 const {initTemplate} = require('../script/initTemplate');
 const package = require('../package.json');
-const {sync: glob} = require('glob');
 
 let projectName;
-const execCommand = (commander, path) => {
-    const {command, run, description, args} = require(path);
-    const comConfig = commander.command(command); // 存入命令配置
-
-    args.forEach(arg => {
-        comConfig.option(...arg);
-    });
-
-    comConfig.description(description);
-    comConfig.action(run);
-}
 
 function run() {
-    const paths = glob(path.join(__dirname, '../lib/cli/*.js'));
-    paths.forEach(path => {
-        execCommand(commander, path);
-    });
+    const cliArgs = ['start-cli', 'dll-cli'];
     let program = commander.command(package.name).version(package.version)
               .arguments('[project-name]')
               .usage(`${chalk.green('[project-name]')} [options]`)
@@ -50,8 +35,12 @@ function run() {
          process.exit(1);
      }
 
-    commander.parse(process.argv)
-    // initTemplate(projectName)
+     if(cliArgs.includes(projectName)) {
+        console.log('命令工具');
+     }else {
+        initTemplate(projectName)
+     }
+     
 }
 
 run();
