@@ -1,6 +1,7 @@
 const path = require('path');
 const chalk = require('chalk');
 const os = require('os');
+const spawn = require('cross-spawn');
 const validateProjectName = require('validate-npm-package-name');
 const packageJson = require('../package.json');
 const fs = require('fs-extra');
@@ -22,6 +23,9 @@ module.exports.initTemplate = function(projectName) {
 
     // 写入package.json
     writePackage(root, appName);
+
+    // 安装依赖
+    install(root);
 }; 
 
 const checkAppName = appName => {
@@ -78,5 +82,25 @@ const copyFile = (root, template) => {
             }
         })
         
+    })
+}
+
+const install = (root) => {
+    process.chdir(root);
+
+    const command = 'npm';
+    const args = [
+        'install',
+        '--save'
+    ];
+
+    const package = ['json-react-cli', 'react'];
+
+    const child = spawn(command, args.concat(package), {stdio: 'inherit'});
+
+    child.on('close', code => {
+        if(code !== 0) {
+            process.exit(1);
+        }
     })
 }
