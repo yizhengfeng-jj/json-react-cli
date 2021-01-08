@@ -46,10 +46,10 @@ const writePackage = (root, appName) => {
 
     // 将script写入package.json
     packageJson.scripts = Object.assign({
-        start: 'json-react-cli start-cli',
-        build: 'json-react-cli build-cli',
-        test: 'json-react-cli test-cli',
-        eject: 'json-react-cli eject-cli',
+        start: 'json-cli-script start-cli',
+        build: 'json-cli-script build-cli',
+        test: 'json-cli-script test-cli',
+        eject: 'json-cli-script eject-cli',
     });
 
     const fileName = path.join(root, 'package.json');
