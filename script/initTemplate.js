@@ -95,7 +95,7 @@ const install = (root) => {
         '--save'
     ];
 
-    const package = ['json-react-cli', 'react'];
+    const package = ['json-cli-script', 'react'];
 
     const child = spawn(command, args.concat(package), {stdio: 'inherit'});
 
