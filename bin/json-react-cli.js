@@ -5,6 +5,7 @@ const chalk = require('chalk');
 const {initTemplate} = require('../script/initTemplate');
 const package = require('../package.json');
 const {sync: glob} = require('glob');
+
 let projectName;
 const execCommand = (commander, path) => {
     const {command, run, description, args} = require(path);
@@ -12,25 +13,22 @@ const execCommand = (commander, path) => {
 
     args.forEach(arg => {
         comConfig.option(...arg);
-    })
-    comConfig.description(description);
-    comConfig.action(name => {
-        run();
     });
+
+    comConfig.description(description);
+    comConfig.action(run);
 }
 
 function run() {
     const paths = glob(path.join(__dirname, '../lib/cli/*.js'));
-
     paths.forEach(path => {
         execCommand(commander, path);
     });
-    
-    let program = new commander.Command(package.name).version(package.version)
+    let program = commander.command(package.name).version(package.version)
               .arguments('[project-name]')
               .usage(`${chalk.green('[project-name]')} [options]`)
               .action(name => {
-                projectName = name;
+                  projectName = name;
              })
              .option('--verbose', 'print additional logs')
              .option('--info', 'print environment debug info')
@@ -40,8 +38,8 @@ function run() {
              })
              .parse(process.argv)
     
-     // 如果projectName有值，那么初始一个template
-     if(typeof projectName === 'undefined') {
+    // 如果projectName有值，那么初始一个template
+    if(typeof projectName === 'undefined') {
          console.log('please specify the project diretory');
          console.log();
          console.log(` ${chalk.cyan(program.name())} ${chalk.green('<project-name>')}`);
@@ -51,7 +49,9 @@ function run() {
          
          process.exit(1);
      }
-    initTemplate(projectName)
+
+    commander.parse(process.argv)
+    // initTemplate(projectName)
 }
 
 run();
